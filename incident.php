@@ -11,7 +11,7 @@
         integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script type="module" src="JS/map.js"></script>
+    <!-- <script type="module" src="JS/map.js"></script> -->
     <title>Report Incident</title>
     <style>
         input[type=text],
@@ -88,15 +88,64 @@
             <input type="submit" value="Submit">
         </form>
     </div>
-
     <script>
-        (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
-            key: "AIzaSyCj45z8ZE7hzURM2u1zJwbRPFuEuemtcmw",
-            // Add other bootstrap parameters as needed, using camel case.
-            // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
-        });
+
+        function initMap() {
+
+            let mapOptions = {
+                center: { lat: 6.820795, lng: 80.03944 },
+                zoom: 12,
+            }
+            let map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            let markerOptions = {
+                position: { lat: 6.820795, lng: 80.03944 },
+                map: map,
+                draggable: true,
+
+            }
+            var marker = null;
+            google.maps.event.addListener(map, 'click', function (event) {
+                if (marker) {
+
+                    marker.setMap(null);
+
+                    let pos = marker.getPosition();
+                    console.log(pos.lat() + ',' + pos.lng());
+                }
+
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                    draggable: true,
+                });
+
+                marker.addListener('dragend', function () {
+                    let pos = marker.getPosition();
+                    console.log(pos.lat() + ',' + pos.lng());
+
+                });
+
+
+
+            });
+
+
+
+
+
+
+
+
+        }
+
     </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6IU7x0jaNIUtxi-dJCASHNknI-TfyWWU&callback=initMap"></script>
 
 </body>
 
 </html>
+
+<!-- AIzaSyA6IU7x0jaNIUtxi-dJCASHNknI-TfyWWU -->
