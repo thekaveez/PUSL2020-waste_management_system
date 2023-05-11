@@ -66,21 +66,29 @@
 
     <h1 class="display-1">Report Incident</h1>
     <div class="container">
-        <form action="report.php" method="post" enctype="multipart/form-data">
+        <?php if (isset($_GET['error'])): ?>
+            <p>
+                <?php echo $_GET['error']; ?>
+            </p>
+        <?php endif ?>
+        <form action="incident_process.php" method="post" enctype="multipart/form-data">
             <label for="location">Location</label>
             <!-- <input type="text" id="location" name="location" placeholder="Enter location" required> -->
 
             <!-- map -->
             <div id="map" style="height: 400px;" class="map"></div>
 
+            <input type="text" name="lat" value="">
+            <input type="text" name="lng" value="">
+
             <label for="title">Title</label>
-            <input type="text" id="title" name="title" placeholder="Enter Title" required>
+            <input type="text" id="title" name="incident_title" placeholder="Enter Title" required>
 
             <label for="image" class="form-label">Image</label>
-            <input class="form-control" type="file" id="image" name="image" accept="image/*">
+            <input class="form-control" type="file" id="image" name="incident_image" accept="image/*">
 
             <label for="details">Description</label>
-            <textarea id="details" name="details" placeholder="Enter incident details" style="height:200px"
+            <textarea id="details" name="incident_description" placeholder="Enter incident details" style="height:200px"
                 required></textarea>
 
 
@@ -110,8 +118,9 @@
 
                     marker.setMap(null);
 
-                    let pos = marker.getPosition();
-                    console.log(pos.lat() + ',' + pos.lng());
+                    let pos = marker.getPosition(showError);
+                    document.querySelector('input[name="lat"]').value = pos.lat();
+                    document.querySelector('input[name="lng"]').value = pos.lng();
                 }
 
                 marker = new google.maps.Marker({
@@ -121,22 +130,31 @@
                 });
 
                 marker.addListener('dragend', function () {
-                    let pos = marker.getPosition();
-                    console.log(pos.lat() + ',' + pos.lng());
+                    let pos = marker.getPosition(showError);
+                    document.querySelector('input[name="lat"]').value = pos.lat();
+                    document.querySelector('input[name="lng"]').value = pos.lng();
 
                 });
 
+                function showError(error) {
 
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("User denied the request for Geolocation.")
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("Location information is unavailable.")
+                            break;
+                        case error.TIMEOUT:
+                            alert("The request to get user location timed out.")
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            alert("An unknown error occurred.")
+                            break;
+                    }
+                }
 
             });
-
-
-
-
-
-
-
-
         }
 
     </script>

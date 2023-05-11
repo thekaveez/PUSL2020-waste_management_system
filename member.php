@@ -23,6 +23,7 @@ if (isset($_SESSION['user_id'])) {
         <?= htmlspecialchars($user["first_name"]) ?>
     </p>
 
+    <a href="incident_report.php">report</a> <br>
     <a href="logout.php">Logout</a>
 
 <?php else: ?>
