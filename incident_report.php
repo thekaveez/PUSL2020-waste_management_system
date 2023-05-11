@@ -78,8 +78,8 @@
             <!-- map -->
             <div id="map" style="height: 400px;" class="map"></div>
 
-            <input type="text" name="lat" value="">
-            <input type="text" name="lng" value="">
+            <input type="hidden" name="lat" value="">
+            <input type="hidden" name="lng" value="">
 
             <label for="title">Title</label>
             <input type="text" id="title" name="incident_title" placeholder="Enter Title" required>
