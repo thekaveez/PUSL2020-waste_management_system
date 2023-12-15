@@ -83,7 +83,7 @@ $incidents = $result->fetch_all(MYSQLI_ASSOC);
     </script>
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6IU7x0jaNIUtxi-dJCASHNknI-TfyWWU&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=<YOUR API KEY>&callback=initMap"></script>
 
 </body>
 
